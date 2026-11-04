@@ -1,4 +1,5 @@
-from flask import Flask
+
+from flask import Flask, redirect, url_for
 
 from app.extensions import db, migrate
 
@@ -19,6 +20,7 @@ def create_app():
 
     migrate.init_app(app, db)
 
+    # Registrar Blueprints
     app.register_blueprint(
         bp_medicos,
         url_prefix="/medicos"
@@ -33,5 +35,10 @@ def create_app():
         bp_citas,
         url_prefix="/citas"
     )
+
+    # Ruta principal
+    @app.route("/")
+    def inicio():
+        return redirect(url_for("bp_medicos.listar"))
 
     return app
