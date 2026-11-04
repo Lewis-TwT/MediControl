@@ -6,6 +6,7 @@ from app.medicos.routes import bp_medicos
 from app.pacientes.routes import bp_pacientes
 from app.citas.routes import bp_citas
 
+
 def create_app():
 
     app = Flask(__name__)

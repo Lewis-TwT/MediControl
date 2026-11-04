@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+
+{% block title %}Formulario Médico{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    {% if medico %}
+        Editar Médico
+    {% else %}
+        Registrar Médico
+    {% endif %}
+</h2>
+
+<form method="POST">
+
+    <div class="mb-3">
+        <label class="form-label">Nombre completo</label>
+
+        <input type="text"
+               name="nombre"
+               class="form-control"
+               value="{{ medico.nombre if medico else '' }}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Especialidad</label>
+
+        <input type="text"
+               name="especialidad"
+               class="form-control"
+               value="{{ medico.especialidad if medico else '' }}"
+               required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Guardar
+    </button>
+
+    <a href="{{ url_for('bp_medicos.listar') }}"
+       class="btn btn-secondary">
+        Volver
+    </a>
+
+</form>
+
+{% endblock %}

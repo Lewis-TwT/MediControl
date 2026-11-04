@@ -1,0 +1,67 @@
+
+{% extends "base.html" %}
+
+{% block title %}Citas - MediControl{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Gestión de Citas Médicas</h2>
+
+<a href="{{ url_for('bp_citas.nuevo') }}" class="btn btn-primary mb-3">
+    Registrar Cita
+</a>
+
+<table class="table table-bordered table-striped">
+
+    <thead class="table-primary">
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Médico</th>
+            <th>Paciente</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for cita in citas %}
+        <tr>
+            <td>{{ cita.id }}</td>
+            <td>{{ cita.fecha.strftime('%d/%m/%Y') }}</td>
+            <td>{{ cita.hora.strftime('%H:%M') }}</td>
+            <td>{{ cita.medico.nombre }}</td>
+            <td>{{ cita.paciente.nombre }}</td>
+
+            <td>
+                <a href="{{ url_for('bp_citas.editar', id=cita.id) }}"
+                   class="btn btn-warning btn-sm">
+                    Editar
+                </a>
+
+                <form action="{{ url_for('bp_citas.eliminar', id=cita.id) }}"
+                      method="POST"
+                      class="d-inline">
+
+                    <button type="submit"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('¿Eliminar esta cita?')">
+                        Eliminar
+                    </button>
+
+                </form>
+            </td>
+        </tr>
+
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-center">
+                No existen citas registradas.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

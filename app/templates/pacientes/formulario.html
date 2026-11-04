@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+
+{% block title %}Formulario Paciente{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    {% if paciente %}Editar Paciente{% else %}Registrar Paciente{% endif %}
+</h2>
+
+<form method="POST">
+
+    <div class="mb-3">
+        <label class="form-label">Nombre completo</label>
+
+        <input type="text"
+               name="nombre"
+               class="form-control"
+               value="{{ paciente.nombre if paciente else '' }}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+
+        <input type="text"
+               name="telefono"
+               class="form-control"
+               value="{{ paciente.telefono if paciente else '' }}"
+               required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Guardar
+    </button>
+
+    <a href="{{ url_for('bp_pacientes.listar') }}"
+       class="btn btn-secondary">
+        Volver
+    </a>
+
+</form>
+
+{% endblock %}

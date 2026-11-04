@@ -1,0 +1,77 @@
+
+{% extends "base.html" %}
+
+{% block title %}Formulario de Cita{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    {% if cita %}Editar Cita{% else %}Registrar Cita{% endif %}
+</h2>
+
+<form method="POST">
+
+    <div class="mb-3">
+        <label class="form-label">Fecha</label>
+
+        <input type="date"
+               name="fecha"
+               class="form-control"
+               value="{{ cita.fecha.isoformat() if cita else '' }}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Hora</label>
+
+        <input type="time"
+               name="hora"
+               class="form-control"
+               value="{{ cita.hora.strftime('%H:%M') if cita else '' }}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Médico</label>
+
+        <select name="medico_id" class="form-select" required>
+            <option value="">Seleccione un médico</option>
+
+            {% for medico in medicos %}
+            <option value="{{ medico.id }}"
+                {% if cita and cita.medico_id == medico.id %}selected{% endif %}>
+                {{ medico.nombre }} - {{ medico.especialidad }}
+            </option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Paciente</label>
+
+        <select name="paciente_id" class="form-select" required>
+            <option value="">Seleccione un paciente</option>
+
+            {% for paciente in pacientes %}
+            <option value="{{ paciente.id }}"
+                {% if cita and cita.paciente_id == paciente.id %}selected{% endif %}>
+                {{ paciente.nombre }}
+            </option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Guardar
+    </button>
+
+    <a href="{{ url_for('bp_citas.listar') }}"
+       class="btn btn-secondary">
+        Volver
+    </a>
+
+</form>
+
+{% endblock %}
